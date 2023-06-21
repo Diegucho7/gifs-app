@@ -5,16 +5,27 @@ export class GifsService {
     
     private _tagsHistory: string[] = [];
 
-    
+
     
     constructor() { }
     
     get tagHistory(){
        return [...this._tagsHistory]; 
     }
-    searchTag( tag: string):void {
+
+    private organizeHistory(tag: string){
+        tag = tag.toLowerCase();
+        if(this._tagsHistory.includes(tag)){
+            this._tagsHistory = this._tagsHistory.filter((oldTag)=>oldTag !== tag)
+        }
         this._tagsHistory.unshift(tag);
-        console.log(this.tagHistory);
+        this._tagsHistory = this._tagsHistory.splice(0,10);
     }
 
+    searchTag( tag: string):void {
+        if (tag.length === 0) return;
+        // this._tagsHistory.unshift(tag);
+        console.log(this.tagHistory);
+    }
 }
+
